@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String        @id @default(cuid())
+  email            String        @unique
+  name             String
+  password         String
+  role             UserRole
+  status           AccountStatus @default(active)
+  libraryId        String?
+  hasResetPassword Boolean       @default(false)
+
+  library     Library?     @relation(fields: [libraryId], references: [id])
+  booksRented RentedBook[]
+
+  purchasedBooks BookSale[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Library {
+  id        String   @id @default(cuid())
+  name      String
+  location  String
+  phoneNo   String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  books     Book[]
+  librarian User[]
+}
+
+model Book {
+  id             String  @id @default(cuid())
+  title          String
+  author         String
+  isbn           String  @unique
+  pdfLink        String
+  imageUrl       String
+  purchaseAmount Decimal
+  genreId        String
+  libraryId      String
+
+  genre   Genre        @relation(fields: [genreId], references: [id])
+  library Library      @relation(fields: [libraryId], references: [id])
+  rents   RentedBook[]
+  sales   BookSale[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Genre {
+  id   String @id @default(cuid())
+  name String @unique
+
+  books Book[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("genres")
+}
+
+model BookSale {
+  id     String @id @default(cuid())
+  bookId String
+  userId String
+
+  book    Book     @relation(fields: [bookId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
+  payment Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("book_sales")
+}
+
+model RentedBook {
+  id         String    @id @default(cuid())
+  rentedAt   DateTime  @default(now())
+  returnDate DateTime?
+  isReturned Boolean   @default(false)
+  bookId     String
+  userId     String
+
+  book    Book     @relation(fields: [bookId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
+  payment Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rented_books")
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  type          BookingType   @default(rent)
+  paymentMethod PaymentMethod
+  amount        Decimal
+  rentalBookId  String?       @unique
+  bookSaleId    String?       @unique
+
+  rentalBook RentedBook? @relation(fields: [rentalBookId], references: [id])
+  bookSale   BookSale?   @relation(fields: [bookSaleId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("payments")
+}
+
+model Config {
+  id                          String   @id @default(cuid())
+  amountTill60DaysPricePerDay Decimal
+  moreThan60DaysPricePerDay   Decimal
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+}
+
+enum UserRole {
+  admin
+  librarian
+  customer
+}
+
+enum AccountStatus {
+  active
+  deleted
+  banned
+}
+
+enum BookingType {
+  rent
+  purchase
+  booking
+}
+
+enum PaymentMethod {
+  debit_card
+  credit_card
+}
