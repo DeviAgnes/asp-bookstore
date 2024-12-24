@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-35-88-145-33.us-west-2.compute.amazonaws.com 'bash -s' << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-100-26-147-4.compute-1.amazonaws.com 'bash -s' << 'EOF'
 
           cd asp-bookstore
 
