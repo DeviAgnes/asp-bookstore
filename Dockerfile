@@ -30,7 +30,7 @@ RUN bun install
 COPY . ./
 
 # Build the app (add this line to ensure build step)
-RUN bun build
+RUN npm run build
 
 # Expose port
 EXPOSE 3000
