@@ -20,6 +20,10 @@ FROM oven/bun:latest
 # Set working directory
 WORKDIR /app
 
+
+#install npm manually
+RUN apt-get update && apt-get install -y --no-install-recommends npm
+
 # Copy package.json and bun.lockb* files
 COPY package.json bun.lockb* ./
 
