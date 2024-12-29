@@ -1,20 +1,23 @@
-# Use the Bun base image
-FROM oven/bun:latest
+# Use the base image
+FROM node:16
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and bun.lockb for dependency installation
-COPY package.json bun.lockb* ./
+# Copy package.json and package-lock.json (or yarn.lock) first
+COPY package*.json ./
 
 # Install dependencies
-RUN bun install
+RUN npm install
 
-# Copy the rest of the application
+# Build the app
+RUN npm run build
+
+# Copy the rest of the app files
 COPY . .
 
-# Expose the application port
+# Expose the port (if needed)
 EXPOSE 3000
 
-# Start the application
-CMD ["bun", "start"]
+# Start the app
+CMD ["npm", "start"]
