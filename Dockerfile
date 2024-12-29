@@ -1,19 +1,16 @@
-# Base image
-FROM node:16-alpine
+# Use the Bun base image
+FROM oven/bun:latest
 
-# Install bash and curl
-RUN apk add --no-cache bash curl
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package.json and bun.lockb for dependency installation
 COPY package.json bun.lockb* ./
 
-# Install Bun
-RUN curl -fsSL https://bun.sh/install | bash
+# Install dependencies
+RUN bun install
 
-# Copy application files
+# Copy the rest of the application
 COPY . .
 
 # Expose the application port
