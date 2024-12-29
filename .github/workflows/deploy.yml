@@ -22,6 +22,10 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-83-230-128.compute-1.amazonaws.com 'bash -s' << 'EOF'
 
+          if [ ! -d "asp-bookstore" ]; then
+          git clone https://github.com/DeviAgnes/asp-bookstore.git asp-bookstore
+          fi
+
           cd asp-bookstore
 
           # Pull the latest changes from the Git repository
