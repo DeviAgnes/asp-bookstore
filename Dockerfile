@@ -1,15 +1,17 @@
 # Base image
 FROM node:16-alpine
 
+# Install bash and curl
+RUN apk add --no-cache bash curl
+
 # Set working directory
 WORKDIR /app
 
 # Copy package files
 COPY package.json bun.lockb* ./
 
-# Install dependencies
+# Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
-RUN bun install --ignore-scripts
 
 # Copy application files
 COPY . .
