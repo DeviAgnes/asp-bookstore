@@ -42,6 +42,8 @@ COPY . .
 # Install Prisma and generate the Prisma client (this step is important)
 RUN bunx prisma generate
 
+# Run Prisma Migrations using Bun
+RUN bunx prisma migrate deploy
 
 # Expose port
 EXPOSE 3000
