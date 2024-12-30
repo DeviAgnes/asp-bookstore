@@ -1,4 +1,4 @@
-# Use the desired Node.js version (e.g., 18 or 20)
+# Use the desired Node.js version (e.g., 20)
 FROM node:20
 
 # Set working directory
@@ -7,14 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json (or yarn.lock) first
 COPY package*.json ./
 
-# Clean npm cache and install production dependencies
-RUN npm cache clean --force && npm install --production
+# Clean npm cache and install all dependencies (including dev dependencies)
+RUN npm cache clean --force && npm install
 
-# Install rimraf directly if not in package.json
-RUN npm install rimraf --save-dev
-
-npm install @remix-run/vite --save-dev
-
+# Install rimraf and @remix-run/vite if they are not already in package.json
+RUN npm install rimraf @remix-run/vite --save-dev
 
 # Build the app
 RUN npm run build
