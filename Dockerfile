@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm cache clean --force && npm install
 
 # Install rimraf and @remix-run/vite if they are not already in package.json
-RUN npm install rimraf @remix-run/vite --save-dev
+RUN npm install rimraf @remix-run/vite-plugin --save-dev
 
 # Build the app
 RUN npm run build
