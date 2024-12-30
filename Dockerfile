@@ -42,6 +42,9 @@ COPY . .
 # Install Prisma and generate the Prisma client (this step is important)
 RUN bunx prisma generate
 
+RUN bunx prisma migrate dev --name init
+
+
 # Run Prisma Migrations using Bun
 RUN bunx prisma migrate deploy
 
