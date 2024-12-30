@@ -13,6 +13,9 @@ RUN npm cache clean --force && npm install --production
 # Install rimraf directly if not in package.json
 RUN npm install rimraf --save-dev
 
+npm install @remix-run/vite --save-dev
+
+
 # Build the app
 RUN npm run build
 
