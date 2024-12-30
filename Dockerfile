@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json (or yarn.lock) first
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Clean npm cache and install production dependencies
+RUN npm cache clean --force && npm install --production
 
 # Build the app
 RUN npm run build
