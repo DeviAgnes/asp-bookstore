@@ -10,6 +10,9 @@ COPY package*.json ./
 # Clean npm cache and install production dependencies
 RUN npm cache clean --force && npm install --production
 
+# Install rimraf directly if not in package.json
+RUN npm install rimraf --save-dev
+
 # Build the app
 RUN npm run build
 
