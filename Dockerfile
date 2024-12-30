@@ -35,11 +35,13 @@ COPY package.json bun.lockb* ./
 # Install dependencies
 RUN bun install
 
-# Install Prisma and generate the Prisma client (this step is important)
-RUN bunx prisma generate
 
 # Copy the rest of the application
 COPY . .
+
+# Install Prisma and generate the Prisma client (this step is important)
+RUN bunx prisma generate
+
 
 # Expose port
 EXPOSE 3000
