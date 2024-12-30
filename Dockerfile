@@ -34,6 +34,10 @@ WORKDIR /app
 COPY package.json bun.lockb* ./
 # Install dependencies
 RUN bun install
+
+# Install Prisma and generate the Prisma client (this step is important)
+RUN bun add @prisma/client prisma && npx prisma generate
+
 # Copy the rest of the application
 COPY . .
 
