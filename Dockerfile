@@ -48,6 +48,9 @@ RUN bunx prisma migrate dev --name init
 # Run Prisma Migrations using Bun
 RUN bunx prisma migrate deploy
 
+RUN bunx prisma db seed
+
+
 # Expose port
 EXPOSE 3000
 # Start the application
