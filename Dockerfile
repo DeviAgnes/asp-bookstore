@@ -35,7 +35,8 @@ COPY package.json bun.lockb* ./
 # Install dependencies
 RUN bun install
 
-# Explicitly copy the .env file (if exists)
+# Copy Prisma schema and .env file
+COPY prisma ./prisma
 COPY .env .env
 
 # Copy the rest of the application
