@@ -1,7 +1,12 @@
 import { PrismaClient, UserRole } from "@prisma/client";
 import { createHash } from "~/utils/encryption";
 
-const db = new PrismaClient();
+// const db = new PrismaClient();
+
+const db = new PrismaClient({
+  log: ['query', 'info', 'warn', 'error'],
+});
+
 
 async function cleanup() {
   console.time("🧹 Cleaned up the database...");
