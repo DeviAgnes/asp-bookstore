@@ -35,6 +35,8 @@ COPY package.json bun.lockb* ./
 # Install dependencies
 RUN bun install
 
+# Explicitly copy the .env file (if exists)
+COPY .env .env
 
 # Copy the rest of the application
 COPY . .
