@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-212-188-34.compute-1.amazonaws.com 'bash -s' << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-88-131-116.compute-1.amazonaws.com 'bash -s' << 'EOF'
 
           if [ ! -d "asp-bookstore" ]; then
           git clone https://github.com/DeviAgnes/asp-bookstore.git asp-bookstore
