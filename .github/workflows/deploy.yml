@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-164-173-236.compute-1.amazonaws.com 'bash -s' << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-164-173-236.compute-1.amazonaws.com 'bash -s' << EOF
         # Set environment variables from GitHub Secrets
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
@@ -37,8 +37,7 @@ jobs:
 
           # Copy .env file from the GitHub repository to EC2
           echo "Copying .env file to EC2"
-          cp ./asp-bookstore/.env /home/ubuntu/asp-bookstore/.env
-
+          cp ../.env ./.env
           # Stop the Docker container if it's running
           sudo docker stop asp-bookstore || true
           sudo docker rm asp-bookstore || true
