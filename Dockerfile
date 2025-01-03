@@ -52,9 +52,9 @@ RUN bunx prisma generate
 
 
 # Run Prisma Migrations using Bun
-RUN bunx prisma migrate deploy
+# RUN bunx prisma migrate deploy
 
-RUN bunx prisma db seed
+# RUN bunx prisma db seed
 
 
 # Expose port
