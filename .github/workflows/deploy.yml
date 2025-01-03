@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-207-218-227.compute-1.amazonaws.com 'bash -s' << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-164-173-236.compute-1.amazonaws.com 'bash -s' << 'EOF'
 
           if [ ! -d "asp-bookstore" ]; then
           git clone https://github.com/DeviAgnes/asp-bookstore.git asp-bookstore
@@ -40,7 +40,7 @@ jobs:
           sudo docker build --no-cache -t asp-bookstore . || { echo "Docker build failed"; exit 1; }
 
           echo "Running new Docker container..."
-          sudo docker run -d -p 3000:3000 --name asp-bookstore asp-bookstore || { echo "Failed to start Docker container"; exit 1; }
+          sudo docker run --env-file .env -d -p 3000:3000 --name asp-bookstore asp-bookstore || { echo "Failed to start Docker container"; exit 1; }
 
           echo "Deployment completed successfully!"
         EOF
