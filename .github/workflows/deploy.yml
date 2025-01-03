@@ -21,6 +21,9 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-164-173-236.compute-1.amazonaws.com 'bash -s' << 'EOF'
+        # Set environment variables from GitHub Secrets
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
 
           if [ ! -d "asp-bookstore" ]; then
           git clone https://github.com/DeviAgnes/asp-bookstore.git asp-bookstore

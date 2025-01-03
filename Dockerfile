@@ -35,8 +35,6 @@ COPY package.json bun.lockb* ./
 # Install dependencies
 RUN bun install
 
-# Set environment variables for database connection
-ENV DATABASE_URL="postgresql://DeviAgnes:DeviAgnes123@bookstore-db.cz2s0qqkaqj4.us-east-1.rds.amazonaws.com:5432/postgres"
 
 # Copy Prisma schema and .env file
 COPY prisma ./prisma
