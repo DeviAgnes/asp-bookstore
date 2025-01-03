@@ -35,9 +35,17 @@ jobs:
           git fetch origin main
           git pull origin main
 
+          # Copy .env file from the GitHub repository to EC2
+          echo "Copying .env file to EC2"
+          cp ./asp-bookstore/.env /home/ubuntu/asp-bookstore/.env
+
           # Stop the Docker container if it's running
           sudo docker stop asp-bookstore || true
           sudo docker rm asp-bookstore || true
+
+          # Set environment variables from GitHub Secrets
+          export DATABASE_URL="${{ secrets.DATABASE_URL }}"
+          export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
 
           echo "Building new Docker image..."
           sudo docker build --no-cache -t asp-bookstore . || { echo "Docker build failed"; exit 1; }
