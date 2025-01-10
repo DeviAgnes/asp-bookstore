@@ -153,3 +153,10 @@ enum PaymentMethod {
   debit_card
   credit_card
 }
+model AuditLog {
+  id             Int      @id @default(autoincrement())
+  bookId         String
+  operationType  String
+  operationTime  DateTime @default(now())
+  details        String
+}

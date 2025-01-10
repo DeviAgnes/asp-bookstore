@@ -21,7 +21,7 @@
 //     };
 
 //     const response = await axios.post(
-//       "https://rd2lmy6ysh.execute-api.us-west-2.amazonaws.com/myEmailFunction",
+//       "https://ecqfn7o5a6.execute-api.us-east-1.amazonaws.com/default/bookstore-dbchanges",
 //       payload,
 //       {
 //         method: "POST",
