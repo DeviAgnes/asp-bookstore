@@ -20,7 +20,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-210-183-181.compute-1.amazonaws.com'bash -s' << EOF
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-54-210-183-181.compute-1.amazonaws.com 'bash -s' << EOF
         # Set environment variables from GitHub Secrets
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
