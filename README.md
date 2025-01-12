@@ -1,6 +1,6 @@
 # Libary Management App
 
-## Note
+## Notes
 1. Sample PDF URL
 
    ```
