@@ -1,6 +1,7 @@
 import type { SerializeFrom } from "@remix-run/node";
 import { db } from "~/lib/prisma.server";
 import { BookingType, type PaymentMethod } from "@prisma/client";
+import axios from "axios";
 
 export const getAllBooks = async () => {
   return db.book.findMany({
@@ -187,9 +188,35 @@ export async function createBook(fields: {
   imageUrl: string;
 }) {
   return await db.$transaction(async (tx) => {
-    return await tx.book.create({
+    // Add the book to the database
+    const book = await tx.book.create({
       data: fields,
     });
+
+    // Trigger the Lambda function to send an email
+    try {
+      const payload = {
+        title: fields.title,
+        author: fields.author,
+        emailDetails: {
+          to: "tirudev92@gmail.com", // Recipient email address
+          subject: "New Book Added to the Library",
+          body: `A new book titled "${fields.title}" by ${fields.author} has been added to the library.`,
+        },
+      };
+
+      // Call the Lambda function via API Gateway
+      const response = await axios.post(
+        "https://ecqfn7o5a6.execute-api.us-east-1.amazonaws.com/default/bookstore-dbchanges", // Lambda API Gateway endpoint
+        payload
+      );
+
+      console.log("Email sent successfully via Lambda:", response.data);
+    } catch (error) {
+      console.error("Failed to send email via Lambda:", error);
+    }
+
+    return book;
   });
 }
 
