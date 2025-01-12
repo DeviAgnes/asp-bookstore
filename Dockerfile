@@ -51,7 +51,7 @@ RUN bunx prisma generate
 
 # Run Prisma Migrations using Bun
 # RUN bunx prisma migrate deploy
-RUN npx prisma migrate dev --name add_trigger_for_books
+# RUN npx prisma migrate dev --name add_trigger_for_books
 
 RUN bunx prisma db seed
 
